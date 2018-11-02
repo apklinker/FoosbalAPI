@@ -1,0 +1,68 @@
+{
+  "name": "source-foos",
+  "version": "0.1.0",
+  "description": "A foosball tracker for Source Allies",
+  "main": "src/index.ts",
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "start:dev": "NODE_ENV=dev nodemon",
+
+    "build": "yarn lint && tsc",
+    "lint": "tslint -p . -c tslint.json",
+
+    "test": "NODE_ENV=test jest",
+    "test:watch": "NODE_ENV=test jest --watchAll",
+    "test:cov": "NODE_ENV=test jest --coverage",
+
+    "seq": "sequelize",
+    "seq:seed": "sequelize db:seed:all",
+    "seq:seed:undo": "sequelize db:seed:undo:all",
+    "seq:migrate": "sequelize db:migrate",
+    "seq:migrate:undo": "sequelize db:migrate:undo:all",
+
+    "init:env": "echo \"NODE_ENV=\n\nSERVER_PORT=\n\nDATABASE_HOST=\nDATABASE_PORT=\nDATABASE_NAME=\nDATABASE_USERNAME=\nDATABASE_PASSWORD=\n\nDEV_TOKEN=\">.env.template",
+    "init:db-config": "echo '{\n  \"development\": {\n    \"username\": \"postgres\",\n    \"password\": \"password\",\n    \"database\": \"source_foos_dev\",\n    \"host\": \"localhost\",\n    \"dialect\": \"postgres\"\n  },\n  \"test\": {\n    \"username\": \"postgres\",\n    \"password\": \"password\",\n    \"database\": \"source_foos_test\",\n    \"host\": \"localhost\",\n    \"dialect\": \"postgres\"\n  },\n  \"production\": {\n    \"username\": \"postgres\",\n    \"password\": \"password\",\n    \"database\": \"source_foos_prod\",\n    \"host\": \"\",\n    \"dialect\": \"postgres\"\n  }\n}' > src/database/config.json"
+  },
+  "license": "MIT",
+  "dependencies": {
+    "body-parser": "^1.15.2",
+    "colors": "^1.3.2",
+    "cors": "^2.8.1",
+    "dotenv": "^6.1.0",
+    "express": "^4.14.0",
+    "express-graphql": "^0.6.1",
+    "faker": "^3.1.0",
+    "firebase-admin": "^6.1.0",
+    "graphql": "^14.0.2",
+    "morgan": "^1.9.1",
+    "pg": "^7.6.0",
+    "pg-hstore": "^2.3.2",
+    "reflect-metadata": "^0.1.12",
+    "sequelize": "^4.41.0",
+    "sequelize-cli": "^5.2.0",
+    "sequelize-typescript": "^0.6.6",
+    "ts-node": "^3.1.0",
+    "typegql": "^0.6.0"
+  },
+  "devDependencies": {
+    "@babel/cli": "^7.1.2",
+    "@babel/core": "^7.1.2",
+    "@babel/plugin-proposal-class-properties": "^7.1.0",
+    "@babel/plugin-proposal-object-rest-spread": "^7.0.0",
+    "@babel/preset-env": "^7.1.0",
+    "@babel/preset-typescript": "^7.1.0",
+    "@types/cors": "^2.8.4",
+    "@types/dotenv": "^4.0.3",
+    "@types/express": "^4.16.0",
+    "@types/express-graphql": "^0.6.2",
+    "@types/faker": "^4.1.4",
+    "@types/graphql": "^14.0.3",
+    "@types/morgan": "^1.7.35",
+    "nodemon": "^1.11.0",
+    "tslint": "^5.11.0",
+    "typescript": "^3.1.4"
+  },
+  "resolutions": {
+    "graphql": "14.0.2"
+  }
+}

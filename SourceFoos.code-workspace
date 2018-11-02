@@ -1,0 +1,28 @@
+{
+  "folders": [
+    {
+      "path": "src"
+    },
+    {
+      "path": "_types"
+    },
+    {
+      "name": "root",
+      "path": "."
+    }
+  ],
+  "settings": {
+    "files.exclude": {
+      "**/.git": true,
+      "**/.DS_Store": true,
+      "_types": true,
+      ".vscode": true,
+      "build": true,
+      "node_modules": true,
+      "src": true,
+      "yarn-error.log": true,
+      "yarn.lock": true,
+    },
+    "tslint.autoFixOnSave": true,
+  }
+}

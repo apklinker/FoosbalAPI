@@ -1,0 +1,7 @@
+node_modules/
+yar-error.log
+firebase-key.json
+src/database/config.json
+build/
+.vscode/
+.env*
