@@ -1,4 +1,4 @@
-# Source Allies ball
+# Source Allies Foosball
 
 This project is the backend meant to provide stats for the ball Players here at Source Allies!
 
