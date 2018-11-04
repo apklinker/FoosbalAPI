@@ -1,12 +1,15 @@
 import { Query, SchemaRoot } from 'typegql';
 import BuildingEntity, { Building } from '../../database/models/Building.model';
+import UserEntity from '../../database/models/User.model';
 
 @SchemaRoot()
 export default class BuildingSchema {
 
   @Query({ type: [Building], description: 'Gets all non-deleted buildings' })
   public async getAllBuildings(): Promise<Building[]> {
-    const results = await BuildingEntity.findAll();
+    const results = await BuildingEntity.findAll({
+      include: [UserEntity],
+    });
     return results.map((entity: BuildingEntity) => new Building(entity));
   }
 

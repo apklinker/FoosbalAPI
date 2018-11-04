@@ -1,28 +1,32 @@
-import { Column, DataType, Model } from 'sequelize-typescript';
+import { Column, Model } from 'sequelize-typescript';
 import { Field, ObjectType } from 'typegql';
-import GraphQLBigInt from '../../../_types/GraphQLBigInt';
 import { ModelMetadata } from '../../../_types/ModelMetadata';
+import TypeLong from '../../../_types/TypeLong';
 
 export const META: ModelMetadata = {
   tableName: '',
   objectDescription: 'Basic entity, this should never be visvible to clients',
-  nullable: {
-    id: false,
-    createdAt: false,
-    updatedAt: false,
-    deletedAt: true,
-  },
-  comments: {
-    id: 'Primary key and unique identifier',
-    createdAt: 'The time in ms when this object was created',
-    updatedAt: 'The time in ms when this object was last updated',
-    deletedAt: 'The time in ms when this object was deleted',
-  },
-  types: {
-    id: DataType.BIGINT,
-    createdAt: DataType.BIGINT,
-    updatedAt: DataType.BIGINT,
-    deletedAt: DataType.BIGINT,
+  items: {
+    id: {
+      nullable: false,
+      comment: 'Primary key and unique identifier',
+      type: TypeLong,
+    },
+    createdAt: {
+      nullable: false,
+      comment: 'The time in ms when this object was created',
+      type: TypeLong,
+    },
+    updatedAt: {
+      nullable: false,
+      comment: 'The time in ms when this object was last updated',
+      type: TypeLong,
+    },
+    deletedAt: {
+      nullable: true,
+      comment: 'The time in ms when this object was deleted',
+      type: TypeLong,
+    },
   },
 };
 
@@ -42,32 +46,32 @@ export default class BasicEntity<T extends BasicEntity<T>> extends Model<T> impl
   // Properties
 
   @Column({
-    allowNull: META.nullable.id,
-    autoIncrement: true,
-    comment: META.comments.id,
     primaryKey: true,
-    type: META.types.id,
+    autoIncrement: true,
+    allowNull: META.items.id.nullable,
+    comment: META.items.id.comment,
+    type: META.items.id.type.gql,
   })
   public id: string;
 
   @Column({
-    allowNull: META.nullable.createdAt,
-    comment: META.comments.createdAt,
-    type: META.types.createdAt,
+    allowNull: META.items.createdAt.nullable,
+    comment: META.items.createdAt.comment,
+    type: META.items.createdAt.type.db,
   })
   public createdAt: string;
 
   @Column({
-    allowNull: META.nullable.updatedAt,
-    comment: META.comments.updatedAt,
-    type: META.types.updatedAt,
+    allowNull: META.items.updatedAt.nullable,
+    comment: META.items.updatedAt.comment,
+    type: META.items.updatedAt.type.db,
   })
   public updatedAt: string;
 
   @Column({
-    allowNull: META.nullable.deletedAt,
-    comment: META.comments.deletedAt,
-    type: META.types.deletedAt,
+    allowNull: META.items.deletedAt.nullable,
+    comment: META.items.deletedAt.comment,
+    type: META.items.deletedAt.type.db,
   })
   public deletedAt: string | undefined;
 
@@ -77,31 +81,39 @@ export default class BasicEntity<T extends BasicEntity<T>> extends Model<T> impl
 
 @ObjectType({ description: META.objectDescription })
 export class Basic implements BasicType {
+
+  public static mapUndefined<I extends BasicEntity<any>, O extends Basic>(
+    inputArray: I[],
+    mapper: (input: I) => O,
+  ): O[] {
+    return inputArray === undefined ? [] : inputArray.map(mapper);
+  }
+
   @Field({
-    description: META.comments.id,
-    isNullable: META.nullable.id,
-    type: GraphQLBigInt,
+    description: META.items.id.comment,
+    isNullable: META.items.id.nullable,
+    type: META.items.id.type.gql,
   })
   public id: string;
 
   @Field({
-    description: META.comments.createdAt,
-    isNullable: META.nullable.createdAt,
-    type: GraphQLBigInt,
+    description: META.items.createdAt.comment,
+    isNullable: META.items.createdAt.nullable,
+    type: META.items.createdAt.type.gql,
   })
   public createdAt: string;
 
   @Field({
-    description: META.comments.updatedAt,
-    isNullable: META.nullable.updatedAt,
-    type: GraphQLBigInt,
+    description: META.items.updatedAt.comment,
+    isNullable: META.items.updatedAt.nullable,
+    type: META.items.updatedAt.type.gql,
   })
   public updatedAt: string;
 
   @Field({
-    description: META.comments.deletedAt,
-    isNullable: META.nullable.deletedAt,
-    type: GraphQLBigInt,
+    description: META.items.deletedAt.comment,
+    isNullable: META.items.deletedAt.nullable,
+    type: META.items.deletedAt.type.gql,
   })
   public deletedAt: string | undefined;
 
@@ -111,4 +123,5 @@ export class Basic implements BasicType {
     this.updatedAt = entity.updatedAt;
     this.deletedAt = entity.deletedAt;
   }
+
 }

@@ -1,30 +1,30 @@
-import { BelongsTo, Column, DataType, ForeignKey, Table } from 'sequelize-typescript';
+import { BelongsTo, Column, ForeignKey, Table } from 'sequelize-typescript';
 import { Field, ObjectType } from 'typegql';
-import GraphQLBigInt from '../../../_types/GraphQLBigInt';
 import { ModelMetadata } from '../../../_types/ModelMetadata';
-import BasicEntity, {Basic, BasicType, META as Basic_META} from './Basic';
-import BuildingEntity, { Building, BuildingType } from './Building.model';
+import TypeLong from '../../../_types/TypeLong';
+import TypeString255 from '../../../_types/TypeString255';
+import BasicEntity, {Basic, BasicType } from './Basic';
+import BuildingEntity, { Building } from './Building.model';
 
 export const META: ModelMetadata = {
   tableName: 'users',
   objectDescription: 'Any Building Sourec Allies is working in',
-  nullable: {
-    ...Basic_META.nullable,
-    firstName: false,
-    lastName: false,
-    buildingId: false,
-  },
-  comments: {
-    ...Basic_META.comments,
-    firstName: 'The user\'s first name',
-    lastName: 'The user\'s last name',
-    buildingId: 'The id of the user\'s building they work in',
-  },
-  types: {
-    ...Basic_META.types,
-    firstName: DataType.STRING,
-    lastName: DataType.STRING,
-    buildingId: DataType.BIGINT,
+  items: {
+    firstName: {
+      nullable: false,
+      comment: 'The user\'s first name',
+      type: TypeString255,
+    },
+    lastName: {
+      nullable: false,
+      comment: 'The user\'s last name',
+      type: TypeString255,
+    },
+    buildingId: {
+      nullable: false,
+      comment: 'The id of the user\'s building they work in',
+      type: TypeLong,
+    },
   },
 };
 
@@ -34,7 +34,6 @@ export abstract class UserType extends BasicType {
   public firstName: string;
   public lastName: string;
   public buildingId: string;
-  public building: BuildingType;
 }
 
 // Database Entity
@@ -45,25 +44,25 @@ export default class UserEntity extends BasicEntity<UserEntity> implements UserT
   // Properties
 
   @Column({
-    allowNull: META.nullable.firstName,
-    comment: META.comments.firstName,
-    type: META.types.firstName,
+    allowNull: META.items.firstName.nullable,
+    comment: META.items.firstName.comment,
+    type: META.items.firstName.type.db,
   })
   public firstName: string;
 
   @Column({
-    allowNull: META.nullable.lastName,
-    comment: META.comments.lastName,
-    type: META.types.lastName,
+    allowNull: META.items.lastName.nullable,
+    comment: META.items.lastName.comment,
+    type: META.items.lastName.type.db,
   })
   public lastName: string;
 
   // Associations
 
   @Column({
-    allowNull: META.nullable.buildingId,
-    comment: META.comments.buildingId,
-    type: META.types.buildingId,
+    allowNull: META.items.buildingId.nullable,
+    comment: META.items.buildingId.comment,
+    type: META.items.buildingId.type.db,
   })
   @ForeignKey(() => BuildingEntity)
   public buildingId: string;
@@ -79,37 +78,35 @@ export default class UserEntity extends BasicEntity<UserEntity> implements UserT
 export class User extends Basic implements UserType {
 
   @Field({
-    isNullable: META.nullable.firstName,
-    description: META.comments.firstName,
+    isNullable: META.items.firstName.nullable,
+    description: META.items.firstName.comment,
+    type: META.items.firstName.type.gql,
   })
   public firstName: string;
 
   @Field({
-    isNullable: META.nullable.lastName,
-    description: META.comments.lastName,
+    isNullable: META.items.lastName.nullable,
+    description: META.items.lastName.comment,
+    type: META.items.lastName.type.gql,
   })
   public lastName: string;
 
   @Field({
-    isNullable: META.nullable.buildingId,
-    description: META.comments.buildingId,
-    type: GraphQLBigInt,
+    isNullable: META.items.buildingId.nullable,
+    description: META.items.buildingId.comment,
+    type: META.items.buildingId.type.gql,
   })
   public buildingId: string;
 
-  @Field({
-    isNullable: META.nullable.buildingId,
-    description: META.comments.buildingId,
-    type: Building,
-  })
-  public building: Building;
+  // @Field({ type: Building })
+  // public building: Building;
 
-  constructor(entity: UserType) {
+  constructor(entity: UserEntity) {
     super(entity);
     this.firstName = entity.firstName;
     this.lastName = entity.lastName;
     this.buildingId = entity.buildingId;
-    this.building = new Building(entity.building);
+    // this.building = new Building(entity.building);
   }
 
 }

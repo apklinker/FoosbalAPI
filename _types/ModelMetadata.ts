@@ -1,15 +1,13 @@
-import sequelize = require('sequelize');
+import { DataType } from '.';
 
 export interface ModelMetadata {
   tableName: string;
   objectDescription: string;
-  nullable: {
-    [key: string]: boolean;
-  };
-  comments: {
-    [key: string]: string;
-  };
-  types: {
-    [key: string]: sequelize.DataTypeAbstract;
+  items: {
+    [key: string]: {
+      nullable: boolean;
+      comment: string;
+      type: DataType<any>;
+    },
   };
 }

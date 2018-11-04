@@ -1,26 +1,24 @@
-import { Column, DataType, HasMany, Table } from 'sequelize-typescript';
+import { Column, HasMany, Table } from 'sequelize-typescript';
 import { Field, ObjectType } from 'typegql';
 import { ModelMetadata } from '../../../_types/ModelMetadata';
-import BasicEntity, {Basic, BasicType, META as Basic_META} from './Basic';
-import User from './User.model';
+import TypeString255 from '../../../_types/TypeString255';
+import BasicEntity, { Basic, BasicType } from './Basic';
+import UserEntity, { User } from './User.model';
 
 export const META: ModelMetadata = {
   tableName: 'buildings',
   objectDescription: 'Any Building Sourec Allies is working in',
-  nullable: {
-    ...Basic_META.nullable,
-    name: false,
-    address: false,
-  },
-  comments: {
-    ...Basic_META.comments,
-    name: 'The name of the building',
-    address: 'The building\'s address',
-  },
-  types: {
-    ...Basic_META.types,
-    name: DataType.STRING,
-    address: DataType.STRING,
+  items: {
+    name: {
+      nullable: false,
+      comment: 'The name of the building',
+      type: TypeString255,
+    },
+    address: {
+      nullable: false,
+      comment: 'The building\'s address',
+      type: TypeString255,
+    },
   },
 };
 
@@ -39,23 +37,23 @@ export default class BuildingEntity extends BasicEntity<BuildingEntity> implemen
   // Properties
 
   @Column({
-    allowNull: META.nullable.name,
-    comment: META.comments.name,
-    type: META.types.name,
+    allowNull: META.items.name.nullable,
+    comment: META.items.name.comment,
+    type: META.items.name.type.db,
   })
   public name: string;
 
   @Column({
-    allowNull: META.nullable.address,
-    comment: META.comments.address,
-    type: META.types.address,
+    allowNull: META.items.address.nullable,
+    comment: META.items.address.comment,
+    type: META.items.address.type.db,
   })
   public address: string;
 
   // Associations
 
-  // @HasMany(() => User)
-  // public users: User[];
+  @HasMany(() => UserEntity)
+  public users: UserEntity[];
 
 }
 
@@ -65,18 +63,20 @@ export default class BuildingEntity extends BasicEntity<BuildingEntity> implemen
 export class Building extends Basic implements BuildingType {
 
   @Field({
-    isNullable: META.nullable.name,
-    description: META.comments.name,
+    isNullable: META.items.name.nullable,
+    description: META.items.name.comment,
+    type: META.items.name.type.gql,
   })
   public name: string;
 
   @Field({
-    isNullable: META.nullable.address,
-    description: META.comments.address,
+    isNullable: META.items.address.nullable,
+    description: META.items.address.comment,
+    type: META.items.address.type.gql,
   })
   public address: string;
 
-  constructor(entity: BuildingType) {
+  constructor(entity: BuildingEntity) {
     super(entity);
     this.name = entity.name;
     this.address = entity.address;
