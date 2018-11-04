@@ -2,29 +2,27 @@
   "name": "source-foos",
   "version": "0.1.0",
   "description": "A foosball tracker for Source Allies",
-  "main": "src/index.ts",
+  "main": "./index.ts",
   "scripts": {
     "start": "ts-node src/index.ts",
     "start:dev": "NODE_ENV=dev nodemon",
-
     "build": "yarn lint && tsc",
     "lint": "tslint -p . -c tslint.json",
-
     "test": "NODE_ENV=test jest",
     "test:watch": "NODE_ENV=test jest --watchAll",
     "test:cov": "NODE_ENV=test jest --coverage",
-
     "seq": "sequelize",
     "seq:seed": "sequelize db:seed:all",
     "seq:seed:undo": "sequelize db:seed:undo:all",
     "seq:migrate": "sequelize db:migrate",
     "seq:migrate:undo": "sequelize db:migrate:undo:all",
-
     "init:env": "echo \"NODE_ENV=\n\nSERVER_PORT=\n\nDATABASE_HOST=\nDATABASE_PORT=\nDATABASE_NAME=\nDATABASE_USERNAME=\nDATABASE_PASSWORD=\n\nDEV_TOKEN=\">.env.template",
     "init:db-config": "echo '{\n  \"development\": {\n    \"username\": \"postgres\",\n    \"password\": \"password\",\n    \"database\": \"source_foos_dev\",\n    \"host\": \"localhost\",\n    \"dialect\": \"postgres\"\n  },\n  \"test\": {\n    \"username\": \"postgres\",\n    \"password\": \"password\",\n    \"database\": \"source_foos_test\",\n    \"host\": \"localhost\",\n    \"dialect\": \"postgres\"\n  },\n  \"production\": {\n    \"username\": \"postgres\",\n    \"password\": \"password\",\n    \"database\": \"source_foos_prod\",\n    \"host\": \"\",\n    \"dialect\": \"postgres\"\n  }\n}' > src/database/config.json"
   },
   "license": "MIT",
   "dependencies": {
+    "@types/jest": "^23.3.9",
+    "babel-plugin-rewire": "^1.2.0",
     "body-parser": "^1.15.2",
     "colors": "^1.3.2",
     "cors": "^2.8.1",
@@ -58,7 +56,9 @@
     "@types/faker": "^4.1.4",
     "@types/graphql": "^14.0.3",
     "@types/morgan": "^1.7.35",
+    "jest": "^23.6.0",
     "nodemon": "^1.11.0",
+    "ts-jest": "^23.10.4",
     "tslint": "^5.11.0",
     "typescript": "^3.1.4"
   },

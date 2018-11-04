@@ -6,35 +6,35 @@ import middleware from './middleware';
 import Env from './utils/Env';
 import Log from './utils/Log';
 
-export default class Server {
-  private port: number;
-  private expressApp: Express.Application;
+class Server {
+  public expressApp: Express.Application;
 
-  constructor(port: number) {
-    this.port = port;
+  constructor() {
     this.expressApp = Express();
   }
 
-  public start = () => {
+  public start = (port: number) => {
     this.setupMiddleware();
     this.setupRoutes();
-    this.expressApp.listen(this.port, this.onListen);
+    this.expressApp.listen(port, this.onListen(port));
   }
 
-  private setupMiddleware = () => {
+  public setupMiddleware = () => {
     this.expressApp.use(middleware);
   }
 
-  private setupRoutes = () => {
+  public setupRoutes = () => {
     const graphiql = Env.isDev();
     this.expressApp.use('/api', ExpressGraphQL({ graphiql, schema }));
   }
 
-  private onListen = () => {
+  public onListen = (port: number) => () => {
     if (Env.isDev()) {
-      const hostname = `http://localhost:${this.port}`.green;
+      const hostname = `http://localhost:${port}`.green;
       Log.d(`Started server on [${hostname}/${'api'.yellow}]`);
       Log.d(`Started GraphIQL on [${hostname}/${'graphiql'.yellow}]`);
     }
   }
 }
+
+export default new Server();

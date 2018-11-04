@@ -4,6 +4,9 @@
       "path": "src"
     },
     {
+      "path": "tests"
+    },
+    {
       "path": "_types"
     },
     {
@@ -20,6 +23,7 @@
       "build": true,
       "node_modules": true,
       "src": true,
+      "tests": true,
       "yarn-error.log": true,
       "yarn.lock": true,
     },
