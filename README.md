@@ -37,6 +37,7 @@ All types will have the following properties:
 
 ### `Elo`
 - **finalRanking**: `Int?`
+- **value**: `Int` *(1000 deafult)*
 - **matchCount**: `Int`
 - **userId**: `Long` → *User.id*
 - **seasonId**: `Long` → *Season.id*
@@ -97,7 +98,7 @@ All types will have the following properties:
 - **awayTables**: `Table[]` ← *Table.awayColorId*
 
 ### `BuildingQueue`
-- **tableId**: `Long` → *Table.id*
+- **buildingId**: `Long` → *Building.id*
 - **groups**: `QueueGroup[]` ← *QueueGroup.queueId*
 
 ### `QueueGroup`
