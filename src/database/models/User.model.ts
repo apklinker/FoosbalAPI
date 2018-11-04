@@ -19,9 +19,7 @@ export default class UserModel extends BasicModel implements UserType {
   @Field(forField(UserType.META, 'buildingId'))
   public buildingId: string;
 
-  @Field(forField(UserType.META, 'buildingId', {
-    type: BuildingModel,
-  }))
+  @Field({ type: () => BuildingModel })
   public building: BuildingModel;
 
   constructor(entity: UserEntity) {
