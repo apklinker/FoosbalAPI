@@ -1,4 +1,5 @@
 import { Field, ObjectType } from 'typegql';
+import Log from '../../utils/Log';
 import BasicModel from './Basic.model';
 import BasicType, { forField, mapNullable } from './Basic.type';
 import BuildingEntity from './Building.entity';
@@ -22,9 +23,11 @@ export default class BuildingModel extends BasicModel implements BuildingType {
 
   constructor(entity: BuildingEntity) {
     super(entity);
+
     this.name = entity.name;
     this.address = entity.address;
-    this.users = mapNullable(entity.users, UserModel);
+
+    this.users = mapNullable(entity.users, (e: UserEntity) => new UserModel(e));
   }
 
 }

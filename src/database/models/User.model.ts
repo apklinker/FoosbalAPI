@@ -1,4 +1,5 @@
 import { Field, ObjectType } from 'typegql';
+import Log from '../../utils/Log';
 import BasicModel from './Basic.model';
 import { forField } from './Basic.type';
 import BuildingModel from './Building.model';
@@ -20,14 +21,16 @@ export default class UserModel extends BasicModel implements UserType {
   public buildingId: string;
 
   @Field({ type: () => BuildingModel })
-  public building: BuildingModel;
+  public building?: BuildingModel | null;
 
   constructor(entity: UserEntity) {
     super(entity);
+
     this.firstName = entity.firstName;
     this.lastName = entity.lastName;
     this.buildingId = entity.buildingId;
-    this.building = new BuildingModel(entity.building);
+
+    this.building = entity.building ? new BuildingModel(entity.building) : null;
   }
 
 }
