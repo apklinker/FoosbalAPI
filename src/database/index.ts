@@ -2,12 +2,12 @@ import { Sequelize } from 'sequelize-typescript';
 import Env from '../utils/Env';
 import Log from '../utils/Log';
 
-Log.d('Matching models in sequelize:');
+Log.d('Looking for db models:');
 const sequelize = new Sequelize({
   logging: false,
   modelMatch: (filename, member) => {
     const match = filename.substring(0, filename.indexOf('.entity.ts')) === 'default';
-    Log.d({ filename, member, match });
+    Log.d('-', { filename, member, match });
     return match;
   },
   modelPaths: [`${__dirname}/models/*.entity.ts`],

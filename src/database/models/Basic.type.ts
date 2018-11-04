@@ -42,7 +42,7 @@ export default abstract class BasicType {
 
 export function mapNullable<I extends BasicEntity<any>, O extends BasicModel>(
   array: I[],
-  mapper: (input: I) => O,
+  mapper: (entity: I) => O,
 ): O[] {
   return array === null || array === undefined ? [] : array.map(mapper);
 }

@@ -27,13 +27,14 @@ All types will have the following properties:
 ### `User`
 - **firstName**: `String` *(255 chars)*
 - **lastName**: `String` *(255 chars)*
+- **name**: `Virtual String` *(255 chars)*
 - **buildingId**: `Long` → *Building.id*
 - **elos**: `Elo[]` ← *Elo.userId*
 - **favoriteUsers**: `User[]` ← *FavoriteUser.favoriteUserId*
 
 ### `FavoriteUser`
 - **userId**: `Long` → *User.id,*
-- **favoriteUserId**: `Long` → *User.id*
+- **favoritedUserId**: `Long` → *User.id*
 
 ### `Elo`
 - **finalRanking**: `Int?`

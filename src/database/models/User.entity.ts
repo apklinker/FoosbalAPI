@@ -1,7 +1,8 @@
-import { BelongsTo, Column, ForeignKey, Table } from 'sequelize-typescript';
+import { BelongsTo, BelongsToMany, Column, ForeignKey, Table } from 'sequelize-typescript';
 import BasicEntity from './Basic._entity';
 import { forColumn } from './Basic.type';
 import BuildingEntity from './Building.entity';
+import FavoriteUserEntity from './FavoriteUser.entity';
 import UserType from './User.type';
 
 @Table({
@@ -27,5 +28,11 @@ export default class UserEntity extends BasicEntity<UserEntity> implements UserT
 
   @BelongsTo(() => BuildingEntity)
   public building: BuildingEntity;
+
+  @BelongsToMany(() => UserEntity, () => FavoriteUserEntity, 'userId', 'favoritedUserId')
+  public favoriteUsers: UserEntity[];
+
+  @BelongsToMany(() => UserEntity, () => FavoriteUserEntity, 'favoritedUserId', 'userId')
+  public favoritedByUsers: UserEntity[];
 
 }

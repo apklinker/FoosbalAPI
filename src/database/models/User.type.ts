@@ -6,7 +6,7 @@ import BasicType from './Basic.type';
 export default abstract class UserType extends BasicType {
   public static META: ModelMetadata = {
     tableName: 'users',
-    objectDescription: 'Any Building Sourec Allies is working in',
+    objectDescription: 'The foosball players of Source Allies',
     items: {
       firstName: {
         nullable: false,
@@ -25,6 +25,7 @@ export default abstract class UserType extends BasicType {
       },
     },
   };
+
   public firstName: string;
   public lastName: string;
   public buildingId: string;

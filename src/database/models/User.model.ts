@@ -1,7 +1,7 @@
 import { Field, ObjectType } from 'typegql';
 import Log from '../../utils/Log';
 import BasicModel from './Basic.model';
-import { forField } from './Basic.type';
+import { forField, mapNullable } from './Basic.type';
 import BuildingModel from './Building.model';
 import UserEntity from './User.entity';
 import UserType from './User.type';
@@ -23,6 +23,12 @@ export default class UserModel extends BasicModel implements UserType {
   @Field({ type: () => BuildingModel })
   public building?: BuildingModel | null;
 
+  @Field({ type: () => [UserModel] })
+  public favoriteUsers: UserModel[];
+
+  @Field({ type: () => [UserModel] })
+  public favoritedByUsers: UserModel[];
+
   constructor(entity: UserEntity) {
     super(entity);
 
@@ -31,6 +37,13 @@ export default class UserModel extends BasicModel implements UserType {
     this.buildingId = entity.buildingId;
 
     this.building = entity.building ? new BuildingModel(entity.building) : null;
+    this.favoriteUsers = mapNullable(entity.favoriteUsers, (e: UserEntity) => new UserModel(e));
+    this.favoritedByUsers = mapNullable(entity.favoritedByUsers, (e: UserEntity) => new UserModel(e));
+  }
+
+  @Field()
+  public name(): string {
+    return `${this.firstName} ${this.lastName}`;
   }
 
 }
