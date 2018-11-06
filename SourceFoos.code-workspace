@@ -7,10 +7,6 @@
       "path": "tests"
     },
     {
-      "path": "_types"
-    },
-    {
-      "name": "root",
       "path": "."
     }
   ],
@@ -18,9 +14,9 @@
     "files.exclude": {
       "**/.git": true,
       "**/.DS_Store": true,
-      "_types": true,
       ".vscode": true,
       "build": true,
+      "coverage": true,
       "node_modules": true,
       "src": true,
       "tests": true,

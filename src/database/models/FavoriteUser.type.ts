@@ -1,5 +1,5 @@
-import { ModelMetadata } from '../../../_types/ModelMetadata';
-import TypeLong from '../../../_types/TypeLong';
+import { ModelMetadata } from '../../_types/ModelMetadata';
+import TypeLong from '../../_types/TypeLong';
 import BasicType from './Basic.type';
 
 export default abstract class FavoriteUserType extends BasicType {

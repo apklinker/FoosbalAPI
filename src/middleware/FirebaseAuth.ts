@@ -1,6 +1,6 @@
 import Express from 'express';
 import * as admin from 'firebase-admin';
-import { TokenResponse } from '../../_types/TokenResponse';
+import { TokenResponse } from '../_types/TokenResponse';
 import Env from '../utils/Env';
 import HttpStatus from '../utils/HttpStatus';
 

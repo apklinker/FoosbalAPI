@@ -1,7 +1,7 @@
 import { IPartialDefineAttributeColumnOptions } from 'sequelize-typescript';
 import { FieldOptions } from 'typegql/types/domains/field';
-import { ModelMetadata } from '../../../_types/ModelMetadata';
-import TypeLong from '../../../_types/TypeLong';
+import { ModelMetadata } from '../../_types/ModelMetadata';
+import TypeLong from '../../_types/TypeLong';
 import Log from '../../utils/Log';
 import BasicEntity from './Basic._entity';
 import BasicModel from './Basic.model';

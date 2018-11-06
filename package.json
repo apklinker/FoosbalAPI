@@ -4,9 +4,9 @@
   "description": "A foosball tracker for Source Allies",
   "main": "./index.ts",
   "scripts": {
-    "start": "ts-node src/index.ts",
+    "start": "ts-node index.ts",
     "start:dev": "NODE_ENV=dev nodemon",
-    "build": "yarn lint && tsc",
+    "build": "yarn lint && tsc && rm -rf build/tests",
     "lint": "tslint -p . -c tslint.json",
     "test": "NODE_ENV=test jest",
     "test:watch": "NODE_ENV=test jest --watchAll",
@@ -22,7 +22,6 @@
   "license": "MIT",
   "dependencies": {
     "@types/jest": "^23.3.9",
-    "babel-plugin-rewire": "^1.2.0",
     "body-parser": "^1.15.2",
     "colors": "^1.3.2",
     "cors": "^2.8.1",
@@ -32,6 +31,7 @@
     "faker": "^3.1.0",
     "firebase-admin": "^6.1.0",
     "graphql": "^14.0.2",
+    "graphql-bigint": "^1.0.0",
     "morgan": "^1.9.1",
     "pg": "^7.6.0",
     "pg-hstore": "^2.3.2",

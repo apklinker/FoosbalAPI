@@ -1,5 +1,5 @@
-import { ModelMetadata } from '../../../_types/ModelMetadata';
-import TypeString255 from '../../../_types/TypeString255';
+import { ModelMetadata } from '../../_types/ModelMetadata';
+import TypeString255 from '../../_types/TypeString255';
 import BasicType from './Basic.type';
 
 export default abstract class BuildingType extends BasicType {

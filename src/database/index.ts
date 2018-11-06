@@ -2,18 +2,8 @@ import { Sequelize } from 'sequelize-typescript';
 import Env from '../utils/Env';
 import Log from '../utils/Log';
 
-if (!Env.isTest()) {
-  Log.d('Looking for db models:');
-}
-const sequelize = new Sequelize({
+export const sequelize = new Sequelize({
   logging: false,
-  modelMatch: (filename, member) => {
-    const match = filename.substring(0, filename.indexOf('.entity.ts')) === 'default';
-    if (!Env.isTest()) {
-      Log.d('-', { filename, member, match });
-    }
-    return match;
-  },
   modelPaths: [`${__dirname}/models/*.entity.ts`],
   operatorsAliases: false,
 
@@ -30,10 +20,12 @@ const sequelize = new Sequelize({
   timezone: '+00:00', // For writing to database
 });
 
-export default class Database {
-  public static connect() {
+const Database = {
+  connect: () => {
     sequelize.authenticate()
       .then(() => Log.d('Connected to postgres.'))
       .catch((err) => Log.e('Unable to connect to the database: ', err));
-  }
-}
+  },
+};
+
+export default Database;
