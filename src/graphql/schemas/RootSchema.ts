@@ -5,7 +5,7 @@ import { Query, SchemaRoot } from 'typegql';
 export default class RootSchema {
 
   @Query({ type: GraphQLString })
-  private ping(): string {
+  public ping(): string {
     return 'pong';
   }
 

@@ -1,25 +1,16 @@
+// istanbul ignore file
 import { Query, SchemaRoot } from 'typegql';
-import BuildingEntity from '../../database/models/Building.entity';
 import BuildingModel from '../../database/models/Building.model';
-import UserEntity from '../../database/models/User.entity';
+import getAllBuildings from '../queries/getAllBuildings';
+import getBuilding from '../queries/getBuilding';
 
 @SchemaRoot()
 export default class BuildingSchema {
 
-  @Query({ type: [BuildingModel], description: 'Gets all non-deleted buildings' })
-  public async getAllBuildings(): Promise<BuildingModel[]> {
-    const results = await BuildingEntity.findAll({ include: [UserEntity] });
-    return results.map((entity: BuildingEntity) => new BuildingModel(entity));
-  }
+  @Query({ type: [BuildingModel], description: 'Gets all buildings' })
+  public async getAllBuildings(): Promise<BuildingModel[]> { return getAllBuildings(); }
 
   @Query({ type: BuildingModel, description: 'Get a single building' })
-  public async getBuildingById(id: string): Promise<BuildingModel> {
-    const result = (await BuildingEntity.findById(id, { include: [UserEntity] })) as BuildingEntity|null;
-    if (result === null) {
-      throw new Error(`Building with id=${id} was not found`);
-    } else {
-      return new BuildingModel(result);
-    }
-  }
+  public async getBuilding(buildingId: string): Promise<BuildingModel> { return getBuilding(buildingId); }
 
 }

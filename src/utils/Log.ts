@@ -1,3 +1,4 @@
+// istanbul ignore file
 export default class Log {
 
   public static d(message?: any, ...optionalParams: any[]): void {

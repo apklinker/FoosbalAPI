@@ -1,3 +1,4 @@
+// istanbul ignore file
 import 'colors';
 import Express, { Request, Response } from 'express';
 import morgan from 'morgan';
