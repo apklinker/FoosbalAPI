@@ -16,11 +16,17 @@ export default class FavoriteUserEntity extends BasicEntity<FavoriteUserEntity> 
   // Associations
 
   @Column(forColumn(FavoriteUserType.META, 'userId'))
-  @ForeignKey(() => UserEntity)
+  @ForeignKey(
+    // istanbul ignore next
+    () => UserEntity,
+  )
   public userId: string;
 
   @Column(forColumn(FavoriteUserType.META, 'favoritedUserId'))
-  @ForeignKey(() => UserEntity)
+  @ForeignKey(
+    // istanbul ignore next
+    () => UserEntity,
+  )
   public favoritedUserId: string;
 
 }

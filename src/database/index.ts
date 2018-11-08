@@ -22,9 +22,11 @@ export const sequelize = new Sequelize({
 
 const Database = {
   connect: () => {
-    sequelize.authenticate()
-      .then(() => Log.d('Connected to postgres.'))
-      .catch((err) => Log.e('Unable to connect to the database: ', err));
+    sequelize.authenticate().then(() => {
+      Log.d('Connected to postgres');
+    }).catch((err) => {
+      Log.e('Failed to connect to postgres', err);
+    });
   },
 };
 

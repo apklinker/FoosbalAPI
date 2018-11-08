@@ -37,8 +37,16 @@ export default class UserModel extends BasicModel implements UserType {
     this.buildingId = entity.buildingId;
 
     this.building = entity.building ? new BuildingModel(entity.building) : null;
-    this.favoriteUsers = mapNullable(entity.favoriteUsers, (e: UserEntity) => new UserModel(e));
-    this.favoritedByUsers = mapNullable(entity.favoritedByUsers, (e: UserEntity) => new UserModel(e));
+    this.favoriteUsers = mapNullable(
+      entity.favoriteUsers,
+      // istanbul ignore next
+      (e: UserEntity) => new UserModel(e),
+    );
+    this.favoritedByUsers = mapNullable(
+      entity.favoritedByUsers,
+      // istanbul ignore next
+      (e: UserEntity) => new UserModel(e),
+    );
   }
 
   @Field()

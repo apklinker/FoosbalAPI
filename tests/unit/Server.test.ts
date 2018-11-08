@@ -20,6 +20,7 @@ describe('Server Methods', () => {
     const setupRoutesSpy = jest.spyOn(server, 'setupRoutes');
     setupMiddlewareSpy.mockImplementationOnce(() => { /* do nothing */ });
     setupRoutesSpy.mockImplementationOnce(() => { /* do nothing */ });
+    expressListenSpy.mockImplementation(() => { /* do nothing */ });
     server.start(port);
 
     expect(setupMiddlewareSpy).toBeCalled();

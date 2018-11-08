@@ -27,7 +27,11 @@ export default class BuildingModel extends BasicModel implements BuildingType {
     this.name = entity.name;
     this.address = entity.address;
 
-    this.users = mapNullable(entity.users, (e: UserEntity) => new UserModel(e));
+    this.users = mapNullable(
+      entity.users,
+      // istanbul ignore next
+      (e: UserEntity) => new UserModel(e),
+    );
   }
 
 }

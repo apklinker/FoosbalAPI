@@ -1,35 +1,30 @@
-import Log from '../../../src/utils/Log';
-const logMock = jest.fn();
-const errorMock = jest.fn();
-Log.d = logMock;
-Log.e = errorMock;
-
 import Database, { sequelize } from '../../../src/database';
+import Log from '../../../src/utils/Log';
 
-const authMock = jest.fn();
-sequelize.authenticate = jest.fn();
+Log.d = jest.fn();
+Log.e = jest.fn();
 
-describe('database', () => {
+describe('Database.connect()', () => {
 
-  describe('connect', () => {
-
-    beforeEach(() => {
-      logMock.mockClear();
+  it('should call sequelize.authenitcate()', async (done) => {
+    sequelize.authenticate = jest.fn(() => Promise.resolve());
+    Database.connect();
+    expect(sequelize.authenticate).toBeCalled();
+    process.nextTick(() => {
+      expect(Log.d).toBeCalledWith('Connected to postgres');
+      done();
     });
+  });
 
-    it('should log on success', () => {
-      authMock.mockReturnValueOnce({});
-      Database.connect();
-      expect(logMock).toBeCalledWith('Connected to postgres.');
+  it('should call sequelize.authenitcate()', async (done) => {
+    const err = 'err';
+    sequelize.authenticate = jest.fn(() => Promise.reject(err));
+    Database.connect();
+    expect(sequelize.authenticate).toBeCalled();
+    process.nextTick(() => {
+      expect(Log.e).toBeCalledWith('Failed to connect to postgres', err);
+      done();
     });
-
-    it('should log on failure', () => {
-      const err = {};
-      authMock.mockRejectedValueOnce(err);
-      Database.connect();
-      expect(errorMock).toBeCalledWith('Unable to connect to the database: ', err);
-    });
-
   });
 
 });

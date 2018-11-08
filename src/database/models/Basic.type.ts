@@ -41,7 +41,7 @@ export default abstract class BasicType {
 }
 
 export function mapNullable<I extends BasicEntity<any>, O extends BasicModel>(
-  array: I[],
+  array: I[] | null,
   mapper: (entity: I) => O,
 ): O[] {
   return array === null || array === undefined ? [] : array.map(mapper);
@@ -69,5 +69,19 @@ export function forField(
     comment: meta.items[columnName].comment,
     type: meta.items[columnName].type.gql,
     ...extraOptions,
+  };
+}
+
+export function createEntity(dataValues: any): any {
+  return {
+    ...dataValues,
+    dataValues,
+    $add: jest.fn(),
+    $count: jest.fn(),
+    $create: jest.fn(),
+    $get: jest.fn(),
+    $has: jest.fn(),
+    $remove: jest.fn(),
+    $set: jest.fn(),
   };
 }
